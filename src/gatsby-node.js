@@ -34,33 +34,32 @@ exports.onCreateNode = async ({
     imagePath,
     name = 'localFile',
     auth = {},
-    ext = null
+    ext = []
   } = options;
   let fileNode;
 
   if (node.internal.type === nodeType) {
     const filext = imagePath.split('.').pop();
-    const url = ext ? `${get(node, imagePath)}${ext}` : get(node, imagePath);
+    const url = get(node, imagePath);
 
     if (!url) {
       return;
     }
+    if (ext.includes(filext)) {
+      try {
+        fileNode = await createRemoteFileNode({
+          url,
+          parentNodeId: node.id,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+          auth,
+          fileext
+        }); // if the extension is listed in the plugin settings
 
-    try {
-      fileNode = await createRemoteFileNode({
-        url,
-        parentNodeId: node.id,
-        store,
-        cache,
-        createNode,
-        createNodeId,
-        auth,
-        ext
-      }); // if the extension is listed in the plugin settings
-
-      if (ext.includes(filext)) {
         // copy the file
-        const copyComplete = copyFiles(fileNode);
+        const copyComplete = copyFiles(fileNode, fileext);
 
         if (copyComplete) {
           createNodeField({
