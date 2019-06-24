@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-cdn-files",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Pull specified filetypes from remote system, downloads them into the static folder and moves them into a public folder for access on in the application.",
   "main": "gatsby-node.js",
   "scripts": {
