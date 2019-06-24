@@ -57,28 +57,27 @@ exports.onCreateNode = async ({
           auth,
           fileext
         }); // if the extension is listed in the plugin settings
-
-        // copy the file
-        const copyComplete = copyFiles(fileNode, fileext);
-
-        if (copyComplete) {
-          createNodeField({
-            node,
-            name: 'path',
-            value: `/static/${ext}/${fileNode.base}`
-          });
-          createNodeField({
-            node,
-            name: 'ext',
-            value: fileext
-          });
-        } else {
-          // eslint-disable-next-line no-console
-          console.error('gatsby-plugin-cdn-files ERROR', 'error copying the file');
-        }
+      } catch (e) {
+        console.error('gatsby-plugin-cdn-files ERROR:', e);
       }
-    } catch (e) {
-      console.error('gatsby-plugin-cdn-files ERROR:', e);
+        // copy the file
+      const copyComplete = copyFiles(fileNode, fileext);
+
+      if (copyComplete) {
+        createNodeField({
+          node,
+          name: 'path',
+          value: `/static/${ext}/${fileNode.base}`
+        });
+        createNodeField({
+          node,
+          name: 'ext',
+          value: fileext
+        });
+      } else {
+        // eslint-disable-next-line no-console
+        console.error('gatsby-plugin-cdn-files ERROR', 'error copying the file');
+      }
     }
   } // Adds a field `localImage` or custom name to the node
   // ___NODE appendix tells Gatsby that this field will link to another node
