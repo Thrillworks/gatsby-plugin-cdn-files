@@ -4,7 +4,9 @@
   "description": "Pull specified filetypes from remote system, downloads them into the static folder and moves them into a public folder for access on in the application.",
   "main": "gatsby-node.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   },
   "repository": {
     "type": "git",
@@ -16,7 +18,7 @@
     "cdn",
     "gatsby-plugin",
     "download",
-    "remote"
+    "remote",
     "gif",
     "png"
   ],
@@ -39,10 +41,5 @@
     "fs-extra": "^8.0.1",
     "gatsby-source-filesystem": "^2.1.0",
     "lodash": "^4.17.11"
-  },
-  "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }
